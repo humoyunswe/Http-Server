@@ -19,7 +19,10 @@ def create_response(status, content="", content_type="text/plain"):
     """
     if content:
         response = f"{status}Content-Type: {content_type}\r\nContent-Length: {len(content)}\r\n\r\n{content}"
-    
+    else:
+        response = f"{status}\r\n"
+    return response.encode()
+
 
 def main():
     pass
