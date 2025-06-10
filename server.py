@@ -17,8 +17,9 @@ def create_response(status, content="", content_type="text/plain"):
         - route_request()
         - handle_client()
     """
+    if content:
+        response = f"{status}Content-Type: {content_type}\r\nContent-Length: {len(content)}\r\n\r\n{content}"
     
-
 
 def main():
     pass
