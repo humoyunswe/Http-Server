@@ -1,8 +1,14 @@
 import socket
 
+HOST = "localhost"
+PORT = 4221
+files_directory = ""
+
+
+
+
 def main():
-    server_socket = socket.create_server(("localhost", 4221), reuse_port=True)
-    server_socket.accept()
+    pass
 
 if __name__ == "__main__":
     main()
