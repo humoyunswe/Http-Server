@@ -16,6 +16,16 @@ def create_response(status, content="", content_type="text/plain"):
         - handle_files()
         - route_request()
         - handle_client()
+
+
+        HTTP/1.1 200 OK             
+        Content-Type: text/plain   
+        Content-Length: 11          
+                             
+        Hello World  
+
+
+        Like that will response from function.
     """
     if content:
         response = f"{status}Content-Type: {content_type}\r\nContent-Length: {len(content)}\r\n\r\n{content}"
