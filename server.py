@@ -10,7 +10,7 @@ def create_response(status, content="", content_type="text/plain"):
     Creates HTTP response from parts:
         - handle_home()
         - handle_echo()
-        - handle_user_agen()
+        - handle_user_agent()
         - read_file()
         - write_file()
         - handle_files()
@@ -32,6 +32,19 @@ def create_response(status, content="", content_type="text/plain"):
     else:
         response = f"{status}\r\n"
     return response.encode()
+
+    
+def parse_request(request_text):
+    """
+    Parses HTTP request and returns comfy data
+    """
+    lines = request_text.split('\r\n')
+
+    first_line = lines[0].split(' ')
+    mehtod = first_line[0]
+    path = first_line[1]
+
+
 
 
 def main():
