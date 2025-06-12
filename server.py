@@ -44,7 +44,15 @@ def parse_request(request_text):
     mehtod = first_line[0]
     path = first_line[1]
 
-
+    headers = {}
+    for line in lines[1:]:
+        if line == "":
+            break
+        if ":" in line:
+            key, value = line.split(': ', 1)
+            headers[key.lower()] = value
+    body = ""
+    
 
 
 def main():
