@@ -41,7 +41,7 @@ def parse_request(request_text):
     lines = request_text.split('\r\n')
 
     first_line = lines[0].split(' ')
-    mehtod = first_line[0]
+    method = first_line[0]
     path = first_line[1]
 
     headers = {}
@@ -53,6 +53,23 @@ def parse_request(request_text):
             headers[key.lower()] = value
     body = ""
     
+    try: 
+        empty_line_index = lines.index("")
+        if empty_line_index + 1 < len(lines):
+            body = lines[empty_line_index + 1]
+    except ValueError:
+        pass
+
+    return {
+        'mehtod': method,
+        'path': path,
+        'headers': headers,
+        'body': body
+    }
+
+
+
+
 
 
 def main():
