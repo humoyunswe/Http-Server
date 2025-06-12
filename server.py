@@ -68,7 +68,9 @@ def parse_request(request_text):
     }
 
 
-
+def handle_home():
+    """Main page /"""
+    return create_response("HTTP/1.1 200 OK\r\n")
 
 
 
