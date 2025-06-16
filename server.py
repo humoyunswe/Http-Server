@@ -79,6 +79,12 @@ def handle_echo(path):
     text = path.replace('/echo/', '')
     return create_response("HTTP/1.1 200 OK\r\n",text)
 
+def handle_user_agent(headers):
+    """
+    Returns User-Agent header
+    """
+    user_agent = headers.get('user-agent', 'Unknown')
+    return create_response("HTTP/1.1 200 OK\r\n", user_agent)
 
 
 
