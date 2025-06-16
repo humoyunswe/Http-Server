@@ -86,6 +86,17 @@ def handle_user_agent(headers):
     user_agent = headers.get('user-agent', 'Unknown')
     return create_response("HTTP/1.1 200 OK\r\n", user_agent)
 
+def read_file(filename):
+    try:
+        filepath = os.path.join(files_directory, filename)
+        with open(filepath, 'r') as f:
+            content = f.read()
+        return create_response("HTTP/1.1 200 OK\r\n", content, "application/octet-stream")
+    except FileNotFoundError:
+        return create_response("HTTP/1.1 404 Not Found\r\n",)
+    
+
+
 
 
 def main():
