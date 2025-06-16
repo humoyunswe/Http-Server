@@ -72,6 +72,14 @@ def handle_home():
     """Main page /"""
     return create_response("HTTP/1.1 200 OK\r\n")
 
+def handle_echo(path):
+    """
+    Echo function /echo/text
+    """
+    text = path.replace('/echo/', '')
+    return create_response("HTTP/1.1 200 OK\r\n",text)
+
+
 
 
 def main():
