@@ -1,4 +1,5 @@
 import socket
+import os
 
 HOST = "localhost"
 PORT = 4221
@@ -95,7 +96,21 @@ def read_file(filename):
     except FileNotFoundError:
         return create_response("HTTP/1.1 404 Not Found\r\n",)
     
+def write_file(filename, content):
+    """
+    Writes file into files_directory
+    """
+    try:
+        if files_directory and not os.path.exists(files_directory):
+            os.makedirs(files_directory)
 
+        filepath = os.path.join(files_directory, filename)
+        with open(filepath, 'w') as f:
+            f.write(content)
+        return create_response("HTTP/1.1 201 Created\r\n", content)
+    except Exception as e:
+        print(f"Error while writing file: {e}")
+        return create_response("HTTP/1.1 250 Internal Server Error\r\n",)
 
 
 
