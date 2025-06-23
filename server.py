@@ -73,6 +73,7 @@ def handle_home():
     """Main page /"""
     return create_response("HTTP/1.1 200 OK\r\n")
 
+
 def handle_echo(path):
     """
     Echo function /echo/text
@@ -80,12 +81,14 @@ def handle_echo(path):
     text = path.replace('/echo/', '')
     return create_response("HTTP/1.1 200 OK\r\n",text)
 
+
 def handle_user_agent(headers):
     """
     Returns User-Agent header
     """
     user_agent = headers.get('user-agent', 'Unknown')
     return create_response("HTTP/1.1 200 OK\r\n", user_agent)
+
 
 def read_file(filename):
     try:
@@ -96,6 +99,7 @@ def read_file(filename):
     except FileNotFoundError:
         return create_response("HTTP/1.1 404 Not Found\r\n",)
     
+
 def write_file(filename, content):
     """
     Writes file into files_directory
@@ -113,6 +117,18 @@ def write_file(filename, content):
         return create_response("HTTP/1.1 250 Internal Server Error\r\n",)
 
 
+def handle_files(method, path, body):
+    """
+    Processes requests into files /files/filename
+    """
+    filename = path.replace('/files/','')
+
+    if method == 'GET':
+        return read_file(filename)
+    elif method == 'POST':
+        return write_file(filename, body)
+    else:
+        return create_response("HTTP/1.1 405 Method Not Allowed\r\n")
 
 def main():
     pass
