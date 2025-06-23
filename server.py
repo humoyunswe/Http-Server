@@ -1,5 +1,6 @@
 import socket
 import os
+import threading
 
 HOST = "localhost"
 PORT = 4221
@@ -151,6 +152,30 @@ def route_request(request_data):
     
     else:
         return create_response("HTTP/1.1 404 Method Not Found\r\n")
+    
+
+def handle_client(client_socket, client_address):
+    """
+    Processes one client
+    """
+    try:
+        request_bytes = client_socket.recv(4096)
+        request_text = request_bytes.decode()
+
+        request_data = parse_request(request_text)
+
+        response = route_request(request_data)
+        client_socket.send(response)
+    
+    except Exception as e:
+        print(f"Error for processing client {client_address}: {e}")
+
+        error_response = create_response("HTTP/1.1 500 Internal Server Error\r\n")
+        client_socket.send(error_response)
+    
+    finally:
+        client_socket.close()
+    
 
 def main():
     pass
