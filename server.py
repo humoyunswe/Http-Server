@@ -1,5 +1,6 @@
 import socket
 import os
+import sys
 import threading
 
 HOST = "localhost"
@@ -63,7 +64,7 @@ def parse_request(request_text):
         pass
 
     return {
-        'mehtod': method,
+        'method': method,
         'path': path,
         'headers': headers,
         'body': body
@@ -175,10 +176,46 @@ def handle_client(client_socket, client_address):
     
     finally:
         client_socket.close()
+
+
+def start_server(directory=None):
+    """
+    Runs server
+    """
+    global files_directory
     
+    if directory:
+        files_directory = directory
+        print(f"Directory for files: {files_directory}")
+
+    server_socket = socket.create_server((HOST, PORT), reuse_port=True)
+    print(f"Server run on {HOST}:{PORT}")
+
+    try:
+        while True:
+            client_socket, client_address = server_socket.accept()
+            print(f"Connected client: {client_address}")
+
+            thread = threading.Thread(
+                target=handle_client,
+                args=(client_socket, client_address)
+            )
+            thread.start()
+    
+    except KeyboardInterrupt:
+        print("\nServer is stopped")
+    finally:
+        server_socket.close()
 
 def main():
-    pass
+    """
+    Main function
+    """
+    directory = None
+    if len(sys.argv) > 2 and sys.argv[1] == '--directory':
+        directory = sys.argv[2]
+
+    start_server(directory)
 
 if __name__ == "__main__":
     main()
