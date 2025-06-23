@@ -129,6 +129,28 @@ def handle_files(method, path, body):
         return write_file(filename, body)
     else:
         return create_response("HTTP/1.1 405 Method Not Allowed\r\n")
+    
+
+def route_request(request_data):
+    """
+    Determines which function to call
+    """
+    method = request_data['method']
+    path = request_data['path']
+    headers = request_data['headers']
+    body = request_data['body']
+
+    if path == '/':
+        return handle_home()
+    
+    elif path.startswith('/echo/'):
+        return handle_echo(path)
+    
+    elif path.startswith('/files/'):
+        return handle_files(method, path, body)
+    
+    else:
+        return create_response("HTTP/1.1 404 Method Not Found\r\n")
 
 def main():
     pass
